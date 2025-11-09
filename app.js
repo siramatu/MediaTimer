@@ -69,6 +69,7 @@ const elements = {
 
     // 設定
     dailyLimit: document.getElementById('dailyLimit'),
+    adultLimit: document.getElementById('adultLimit'),
     breakInterval: document.getElementById('breakInterval'),
     breakDuration: document.getElementById('breakDuration'),
     saveSettingsBtn: document.getElementById('saveSettingsBtn'),
@@ -541,6 +542,7 @@ function showSettings() {
 
     // 現在の設定値を表示
     elements.dailyLimit.value = state.settings.dailyLimitHours;
+    elements.adultLimit.value = state.settings.adultLimitHours;
     elements.breakInterval.value = state.settings.breakIntervalMinutes;
     elements.breakDuration.value = state.settings.breakDurationMinutes;
 }
@@ -554,6 +556,7 @@ function showMain() {
 // 設定保存
 function saveSettings() {
     state.settings.dailyLimitHours = parseFloat(elements.dailyLimit.value);
+    state.settings.adultLimitHours = parseFloat(elements.adultLimit.value);
     state.settings.breakIntervalMinutes = parseInt(elements.breakInterval.value);
     state.settings.breakDurationMinutes = parseInt(elements.breakDuration.value);
 
