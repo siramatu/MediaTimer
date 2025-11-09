@@ -643,12 +643,12 @@ function loadHistory() {
     if (savedHistory) {
         state.history = JSON.parse(savedHistory);
 
-        // 古いデータを削除（7日以上前）
-        const weekAgo = new Date();
-        weekAgo.setDate(weekAgo.getDate() - 7);
+        // 古いデータを削除（30日以上前）
+        const monthAgo = new Date();
+        monthAgo.setDate(monthAgo.getDate() - 30);
 
         state.history = state.history.filter(session => {
-            return new Date(session.date) > weekAgo;
+            return new Date(session.date) > monthAgo;
         });
 
         saveToLocalStorage();
