@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メディアタイマー</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>メディアタイマー</h1>
+            <button id="settingsBtn" class="icon-btn">⚙️</button>
+        </header>
+
+        <main id="mainView">
+            <!-- タイマー表示エリア -->
+            <div class="timer-section">
+                <div class="drum-timer">
+                    <div class="drum-container">
+                        <div class="drum hours">
+                            <div class="drum-digit" id="hours">00</div>
+                        </div>
+                        <span class="separator">:</span>
+                        <div class="drum minutes">
+                            <div class="drum-digit" id="minutes">00</div>
+                        </div>
+                        <span class="separator">:</span>
+                        <div class="drum seconds">
+                            <div class="drum-digit" id="seconds">00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 残り時間表示 -->
+                <div class="remaining-time">
+                    <p id="remainingLabel">今日の残り時間（通常枠）</p>
+                    <div class="remaining-display" id="remainingTime">3:00:00</div>
+                    <p class="adult-limit" id="adultRemaining" style="display: none; margin-top: 10px; font-size: 0.9rem; color: #764ba2;">大人枠の残り: <span id="adultRemainingTime">1:00:00</span></p>
+                </div>
+
+                <!-- 休憩タイマー -->
+                <div class="break-info" id="breakInfo" style="display: none;">
+                    <p>🛑 休憩時間まであと <span id="breakCountdown">--:--</span></p>
+                </div>
+            </div>
+
+            <!-- コントロールボタン -->
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">開始</button>
+                <button id="stopBtn" class="btn btn-danger" disabled>記録して停止</button>
+            </div>
+
+            <!-- コンテンツタイプ選択 -->
+            <div class="content-type">
+                <h3>何を見る？</h3>
+                <label class="radio-label">
+                    <input type="radio" name="contentType" value="normal" checked>
+                    自分が見たいもの（映画以外、休憩あり）
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="contentType" value="movie">
+                    映画（休憩なし）
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="contentType" value="adult">
+                    大人が選んだもの（休憩なし）
+                </label>
+            </div>
+
+            <!-- 手動で時間を追加 -->
+            <div class="manual-add-section">
+                <h3>タイマーを使わなかった時間を追加</h3>
+                <div class="manual-add-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manualHours">時間</label>
+                            <input type="number" id="manualHours" min="0" max="10" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualMinutes">分</label>
+                            <input type="number" id="manualMinutes" min="0" max="59" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>種類</label>
+                        <select id="manualContentType">
+                            <option value="normal">自分が見たいもの</option>
+                            <option value="movie">映画</option>
+                            <option value="adult">大人が選んだもの</option>
+                        </select>
+                    </div>
+                    <button id="addManualTimeBtn" class="btn btn-primary">追加</button>
+                </div>
+            </div>
+
+            <!-- 使用履歴 -->
+            <div class="history-section">
+                <h2>今日の記録</h2>
+                <div id="historyList" class="history-list">
+                    <!-- 履歴がここに表示される -->
+                </div>
+                <div class="today-total">
+                    <strong>今日の合計:</strong> <span id="todayTotal">0:00:00</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- 設定画面 -->
+        <div id="settingsView" style="display: none;">
+            <div class="settings-header">
+                <button id="backBtn" class="icon-btn">←</button>
+                <h2>設定</h2>
+            </div>
+
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label for="dailyLimit">1日の制限時間（時間）</label>
+                    <input type="number" id="dailyLimit" min="0" max="24" step="0.5" value="3">
+                </div>
+
+                <div class="setting-item">
+                    <label for="breakInterval">休憩間隔（分）</label>
+                    <input type="number" id="breakInterval" min="1" max="120" value="20">
+                </div>
+
+                <div class="setting-item">
+                    <label for="breakDuration">休憩時間（分）</label>
+                    <input type="number" id="breakDuration" min="1" max="30" value="10">
+                </div>
+
+                <button id="saveSettingsBtn" class="btn btn-primary">保存</button>
+
+                <div class="danger-zone">
+                    <h3>データ管理</h3>
+                    <button id="clearHistoryBtn" class="btn btn-danger">履歴をクリア</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 休憩通知モーダル -->
+        <div id="breakModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>🛑 休憩時間です！</h2>
+                <p>目を休めましょう。</p>
+                <p class="break-timer">残り <span id="breakTimerDisplay">10:00</span></p>
+                <button id="breakDoneBtn" class="btn btn-primary">休憩完了</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
